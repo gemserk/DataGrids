@@ -28,7 +28,7 @@ public class GridMaskData : MonoBehaviour
             var x = Mathf.RoundToInt(position.x / gridSize.x);
             var y = Mathf.RoundToInt(position.y / gridSize.y);
             if (_gridData.IsInside(x, y))
-                _gridData.StoreValue((int) TestDataEnum.Data0, x, y);
+                _gridData.StoreValue(1 << 0, x, y);
         }
         
         if (Input.GetMouseButton(1))
@@ -37,7 +37,16 @@ public class GridMaskData : MonoBehaviour
             var x = Mathf.RoundToInt(position.x / gridSize.x);
             var y = Mathf.RoundToInt(position.y / gridSize.y);
             if (_gridData.IsInside(x, y))
-                _gridData.StoreValue((int) TestDataEnum.Data1, x, y);
+                _gridData.StoreValue(1 << 1, x, y);
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            var position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + worldSize * 0.5f;
+            var x = Mathf.RoundToInt(position.x / gridSize.x);
+            var y = Mathf.RoundToInt(position.y / gridSize.y);
+            if (_gridData.IsInside(x, y))
+                _gridData.StoreValue(1 << 2, x, y);
         }
 
         

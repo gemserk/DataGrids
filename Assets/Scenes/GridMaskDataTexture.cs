@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 public class GridMaskDataTexture : MonoBehaviour
 {
     [SerializeField]
@@ -24,6 +23,9 @@ public class GridMaskDataTexture : MonoBehaviour
     [SerializeField]
     protected float _interpolateColorSpeed = _defaultInterpolationColorSpeed;
 
+    [SerializeField]
+    private Color[] _validColors;
+    
     public void Create(int width, int height, float gridWidth, float gridHeight)
     {
         _texture =  new Texture2D(width, height, _textureFormat, false, false);
@@ -71,13 +73,17 @@ public class GridMaskDataTexture : MonoBehaviour
         {
             var newColor = _startColor;
 
-            var data = (TestDataEnum) _worldMatrix.ReadValue(i);
-            
-            if (data.HasFlag(TestDataEnum.Data0)) 
-                newColor.r = 1;
+            var data = _worldMatrix.ReadValue(i);
 
-            if (data.HasFlag(TestDataEnum.Data1)) 
-                newColor.g = 1;
+            for (var j = 0; j < _validColors.Length; j++)
+            {
+                var color = _validColors[j];
+
+                if ((data & 1 << j) == 0)
+                    continue;
+
+                newColor += color;
+            }
 
             if (interpolationEnabled)
             {
