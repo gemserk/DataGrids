@@ -19,6 +19,9 @@ namespace Gemserk.DataGrids
         private GridMaskData _gridMaskData;
 
         private GridMaskDataTexture _gridTexture;
+
+        [SerializeField]
+        private bool _clearInUpdate;
         
         private void Awake()
         {
@@ -26,6 +29,14 @@ namespace Gemserk.DataGrids
             _gridTexture = new GridMaskDataTexture(TextureFormat.RGBA32, _spriteRenderer, _colors, 
                 _gridMaskData.gridData.width, _gridMaskData.gridData.height, gridSize.x, gridSize.y);
 
+ 
+        }
+        
+        private void Update()
+        {   
+            if (_clearInUpdate)
+                _gridMaskData.gridData.Clear();
+            
             var colliders = FindObjectsOfType<Collider2D>();
             
             for (var i = 0; i < _gridMaskData.gridData.width; i++)
@@ -42,10 +53,7 @@ namespace Gemserk.DataGrids
                     }
                 }
             }
-        }
-        
-        private void Update()
-        {   
+            
             if (Input.GetMouseButton(0))
             {
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
