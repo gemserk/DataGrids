@@ -2,8 +2,8 @@ Just some helper classes to store game world data in grid format using int maski
 
 World data example (colliders):
 
-![Alt text](images/worlddata.png "Demo Drag")
+![](images/worlddata_2.png "World Data")
 
 Grid data:
 
-![Alt text](images/griddata.png "Demo Drag")
+![](images/griddata_2.png "Grid Data")
