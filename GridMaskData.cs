@@ -29,6 +29,12 @@ namespace Gemserk.DataGrids
             gridData = new GridData(Mathf.CeilToInt(worldSize.x / gridSize.x), 
                 Mathf.CeilToInt(worldSize.y / gridSize.y), 0);
         }
-        
+
+        public Vector2 GetWorldPosition(int x, int y)
+        {
+            return new Vector2(
+                x * gridSize.x - worldSize.x * 0.5f,
+                y * gridSize.y - worldSize.y * 0.5f);
+        }
     }
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Gemserk.DataGrids
 {
@@ -26,6 +25,23 @@ namespace Gemserk.DataGrids
             _gridMaskData = new GridMaskData(worldSize, gridSize);
             _gridTexture = new GridMaskDataTexture(TextureFormat.RGBA32, _spriteRenderer, _colors, 
                 _gridMaskData.gridData.width, _gridMaskData.gridData.height, gridSize.x, gridSize.y);
+
+            var colliders = FindObjectsOfType<PolygonCollider2D>();
+            
+            for (var i = 0; i < _gridMaskData.gridData.width; i++)
+            {
+                for (var j = 0; j < _gridMaskData.gridData.height; j++)
+                {
+                    var position = _gridMaskData.GetWorldPosition(i, j);
+                    foreach (var collider in colliders)
+                    {
+                        if (collider.OverlapPoint(position))
+                        {
+                            _gridMaskData.StoreValue(collider.gameObject.layer, position);
+                        }
+                    }
+                }
+            }
         }
         
         private void Update()
