@@ -1,0 +1,1 @@
+Logic to write to into grid representation of game world mask data for "quick" calculations
