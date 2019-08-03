@@ -2,8 +2,8 @@
 
 public class GridMaskData : MonoBehaviour
 {
-    public Vector2 gridSize;
-    public Vector2 worldSize;
+    public Vector3 gridSize;
+    public Vector3 worldSize;
 
     [SerializeField]
     private WorldMatrix _gridData;
@@ -21,5 +21,25 @@ public class GridMaskData : MonoBehaviour
     private void Update()
     {
         _gridTexture.UpdateTexture(_gridData);
+
+        if (Input.GetMouseButton(0))
+        {
+            var position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + worldSize * 0.5f;
+            var x = Mathf.RoundToInt(position.x / gridSize.x);
+            var y = Mathf.RoundToInt(position.y / gridSize.y);
+            if (_gridData.IsInside(x, y))
+                _gridData.StoreValue((int) TestDataEnum.Data0, x, y);
+        }
+        
+        if (Input.GetMouseButton(1))
+        {
+            var position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + worldSize * 0.5f;
+            var x = Mathf.RoundToInt(position.x / gridSize.x);
+            var y = Mathf.RoundToInt(position.y / gridSize.y);
+            if (_gridData.IsInside(x, y))
+                _gridData.StoreValue((int) TestDataEnum.Data1, x, y);
+        }
+
+        
     }
 }

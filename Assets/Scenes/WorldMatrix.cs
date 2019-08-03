@@ -32,6 +32,17 @@ public struct WorldMatrix
         values[i + j * width] |= value;
     }
 
+    public int ReadValue(int i, int j)
+    {
+        return values[i + j * width];
+    }
+    
+    public int ReadValue(int i)
+    {
+        return values[i];
+    }
+
+    
     public bool IsValue(int value, int i, int j)
     {
         return (values[i + j * width] & value) > 0;

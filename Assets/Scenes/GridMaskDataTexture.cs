@@ -1,15 +1,9 @@
 using System;
 using UnityEngine;
 
+
 public class GridMaskDataTexture : MonoBehaviour
 {
-    [Flags]
-    public enum TestDataEnum
-    {
-        Data0 = 1 << 0,
-        Data1 = 1 << 1   
-    }
-    
     [SerializeField]
     protected TextureFormat _textureFormat;
 
@@ -75,25 +69,16 @@ public class GridMaskDataTexture : MonoBehaviour
 
         for (var i = 0; i < width * height; i++)
         {
-            // get coordinates...
-            var x = i % width;
-            var y = Mathf.FloorToInt(i / width);
-                
             var newColor = _startColor;
 
-            var isData0 = _worldMatrix.IsValue((int) TestDataEnum.Data0, i);
-            var isData1 = _worldMatrix.IsValue((int) TestDataEnum.Data1, i);
-
-            if (isData0)
-            {
-                newColor.r = 1;
-            }
-
-            if (isData1)
-            {
-                newColor.g = 1;
-            }
+            var data = (TestDataEnum) _worldMatrix.ReadValue(i);
             
+            if (data.HasFlag(TestDataEnum.Data0)) 
+                newColor.r = 1;
+
+            if (data.HasFlag(TestDataEnum.Data1)) 
+                newColor.g = 1;
+
             if (interpolationEnabled)
             {
                 newColor.r = Mathf.LerpUnclamped(_colors[i].r, newColor.r, alpha);
