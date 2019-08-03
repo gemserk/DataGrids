@@ -7,3 +7,7 @@ World data example (colliders):
 Grid data:
 
 ![](images/griddata_2.png "Grid Data")
+
+Grid data with mixed values:
+
+![](images/griddata_mixed.png "Grid Data")
