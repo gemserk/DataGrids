@@ -26,7 +26,7 @@ namespace Gemserk.DataGrids
             _gridTexture = new GridMaskDataTexture(TextureFormat.RGBA32, _spriteRenderer, _colors, 
                 _gridMaskData.gridData.width, _gridMaskData.gridData.height, gridSize.x, gridSize.y);
 
-            var colliders = FindObjectsOfType<PolygonCollider2D>();
+            var colliders = FindObjectsOfType<Collider2D>();
             
             for (var i = 0; i < _gridMaskData.gridData.width; i++)
             {
