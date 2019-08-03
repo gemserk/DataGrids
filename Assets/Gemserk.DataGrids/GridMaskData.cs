@@ -4,13 +4,18 @@ namespace Gemserk.DataGrids
 {
     public class GridMaskData
     {
-        private Vector3 gridSize;
-        private Vector3 worldSize;
+        private readonly Vector3 gridSize;
+        private readonly Vector3 worldSize;
+        
+        // world to grid conversion
 
         public GridData gridData;
 
-        public void StoreValue(int value, int x, int y)
+        public void StoreValue(int value, Vector2 position)
         {
+            var x = Mathf.RoundToInt((position.x + worldSize.x * 0.5f) / gridSize.x);
+            var y = Mathf.RoundToInt((position.y + worldSize.y * 0.5f) / gridSize.y);
+
             if (!gridData.IsInside(x, y)) 
                 return;
             gridData.StoreValue(value, x, y);
