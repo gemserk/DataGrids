@@ -32,26 +32,20 @@ namespace Gemserk.DataGrids
         {   
             if (Input.GetMouseButton(0))
             {
-                var position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + worldSize * 0.5f;
-                var x = Mathf.RoundToInt(position.x / gridSize.x);
-                var y = Mathf.RoundToInt(position.y / gridSize.y);
-                _gridMaskData.StoreValue(1 << 0, x, y);
+                var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _gridMaskData.StoreValue(1 << 0, position);
             }
         
             if (Input.GetMouseButton(1))
             {
-                var position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + worldSize * 0.5f;
-                var x = Mathf.RoundToInt(position.x / gridSize.x);
-                var y = Mathf.RoundToInt(position.y / gridSize.y);
-                _gridMaskData.StoreValue(1 << 1, x, y);
+                var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _gridMaskData.StoreValue(1 << 1, position);
             }
 
             if (Input.GetKey(KeyCode.Space))
             {
-                var position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + worldSize * 0.5f;
-                var x = Mathf.RoundToInt(position.x / gridSize.x);
-                var y = Mathf.RoundToInt(position.y / gridSize.y);
-                _gridMaskData.StoreValue(1 << 2, x, y);
+                var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _gridMaskData.StoreValue(1 << 2, position);
             }
         }
 
