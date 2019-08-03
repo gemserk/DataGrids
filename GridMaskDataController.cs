@@ -1,33 +1,41 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gemserk.DataGrids
 {
     public class GridMaskDataController : MonoBehaviour
     {
         [SerializeField]
-        private GridMaskData _gridData;
+        private Vector3 gridSize;
+        
+        [SerializeField]
+        private Vector3 worldSize;
+        
+        [SerializeField]
+        private SpriteRenderer _spriteRenderer;
 
-//        private GridMaskDataTexture _gridTexture;
+        [SerializeField]
+        private Color[] _colors;
 
-//        private void Awake()
-//        {
-//            var worldSize = _gridData.worldSize;
-//            
-//            _gridTexture = new GridMaskDataTexture(TextureFormat.RGBA32, _spriteRenderer, _colors, 
-//                _gridData.width, _gridData.height, gridSize.x, gridSize.y);
-//        }
+        private GridMaskData _gridMaskData;
+
+        private GridMaskDataTexture _gridTexture;
+        
+        private void Awake()
+        {
+            _gridMaskData = new GridMaskData(worldSize, gridSize);
+            _gridTexture = new GridMaskDataTexture(TextureFormat.RGBA32, _spriteRenderer, _colors, 
+                _gridMaskData.gridData.width, _gridMaskData.gridData.height, gridSize.x, gridSize.y);
+        }
         
         private void Update()
-        {
-            var worldSize = _gridData.worldSize;
-            var gridSize = _gridData.gridSize;
-            
+        {   
             if (Input.GetMouseButton(0))
             {
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + worldSize * 0.5f;
                 var x = Mathf.RoundToInt(position.x / gridSize.x);
                 var y = Mathf.RoundToInt(position.y / gridSize.y);
-                _gridData.StoreValue(1 << 0, x, y);
+                _gridMaskData.StoreValue(1 << 0, x, y);
             }
         
             if (Input.GetMouseButton(1))
@@ -35,7 +43,7 @@ namespace Gemserk.DataGrids
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + worldSize * 0.5f;
                 var x = Mathf.RoundToInt(position.x / gridSize.x);
                 var y = Mathf.RoundToInt(position.y / gridSize.y);
-                _gridData.StoreValue(1 << 1, x, y);
+                _gridMaskData.StoreValue(1 << 1, x, y);
             }
 
             if (Input.GetKey(KeyCode.Space))
@@ -43,9 +51,13 @@ namespace Gemserk.DataGrids
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + worldSize * 0.5f;
                 var x = Mathf.RoundToInt(position.x / gridSize.x);
                 var y = Mathf.RoundToInt(position.y / gridSize.y);
-                _gridData.StoreValue(1 << 2, x, y);
+                _gridMaskData.StoreValue(1 << 2, x, y);
             }
         }
 
+        private void LateUpdate()
+        {
+            _gridTexture.UpdateTexture(_gridMaskData.gridData);
+        }
     }
 }

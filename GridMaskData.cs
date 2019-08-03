@@ -2,41 +2,28 @@
 
 namespace Gemserk.DataGrids
 {
-    public class GridMaskData : MonoBehaviour
+    public class GridMaskData
     {
-        public Vector3 gridSize;
-        public Vector3 worldSize;
+        private Vector3 gridSize;
+        private Vector3 worldSize;
 
-        [SerializeField]
-        private GridData _gridData;
-
-        [SerializeField]
-        private SpriteRenderer _spriteRenderer;
-
-        [SerializeField]
-        private Color[] _colors;
-
-        private GridMaskDataTexture _gridTexture;
+        public GridData gridData;
 
         public void StoreValue(int value, int x, int y)
         {
-            if (!_gridData.IsInside(x, y)) 
+            if (!gridData.IsInside(x, y)) 
                 return;
-            _gridData.StoreValue(value, x, y);
+            gridData.StoreValue(value, x, y);
         }
 
-        private void Awake()
+        public GridMaskData(Vector2 worldSize, Vector2 gridSize)
         {
-            _gridData = new GridData(Mathf.CeilToInt(worldSize.x / gridSize.x), 
-                Mathf.CeilToInt(worldSize.y / gridSize.y), 0);
+            this.gridSize = gridSize;
+            this.worldSize = worldSize;
             
-            _gridTexture = new GridMaskDataTexture(TextureFormat.RGBA32, _spriteRenderer, _colors, 
-                _gridData.width, _gridData.height, gridSize.x, gridSize.y);
+            gridData = new GridData(Mathf.CeilToInt(worldSize.x / gridSize.x), 
+                Mathf.CeilToInt(worldSize.y / gridSize.y), 0);
         }
         
-        private void LateUpdate()
-        {
-            _gridTexture.UpdateTexture(_gridData);
-        }
     }
 }
