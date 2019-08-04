@@ -36,5 +36,13 @@ namespace Gemserk.DataGrids
                 x * gridSize.x - worldSize.x * 0.5f,
                 y * gridSize.y - worldSize.y * 0.5f);
         }
+
+        public int GetValue(Vector3 position)
+        {
+            var x = Mathf.RoundToInt((position.x + worldSize.x * 0.5f) / gridSize.x);
+            var y = Mathf.RoundToInt((position.y + worldSize.y * 0.5f) / gridSize.y);
+            
+            return gridData.IsInside(x, y) ? gridData.ReadValue(x, y) : 0;
+        }
     }
 }
