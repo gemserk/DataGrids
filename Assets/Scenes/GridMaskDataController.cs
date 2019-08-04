@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Gemserk.DataGrids
 {
@@ -21,6 +22,12 @@ namespace Gemserk.DataGrids
         private GridMaskDataTexture _gridTexture;
 
         [SerializeField]
+        private Text _text;
+
+        [SerializeField]
+        private Transform _unit;
+        
+        [SerializeField]
         private bool _clearInUpdate;
         
         private void Awake()
@@ -28,8 +35,6 @@ namespace Gemserk.DataGrids
             _gridMaskData = new GridMaskData(worldSize, gridSize);
             _gridTexture = new GridMaskDataTexture(TextureFormat.RGBA32, _spriteRenderer, _colors, 
                 _gridMaskData.gridData.width, _gridMaskData.gridData.height, gridSize.x, gridSize.y);
-
- 
         }
         
         private void Update()
@@ -37,18 +42,18 @@ namespace Gemserk.DataGrids
             if (_clearInUpdate)
                 _gridMaskData.gridData.Clear();
             
-            var colliders = FindObjectsOfType<Collider2D>();
+            var gridAreas = FindObjectsOfType<TestAreaObject>();
             
             for (var i = 0; i < _gridMaskData.gridData.width; i++)
             {
                 for (var j = 0; j < _gridMaskData.gridData.height; j++)
                 {
                     var position = _gridMaskData.GetWorldPosition(i, j);
-                    foreach (var collider in colliders)
+                    foreach (var gridArea in gridAreas)
                     {
-                        if (collider.OverlapPoint(position))
+                        if (gridArea.mainCollider.OverlapPoint(position))
                         {
-                            _gridMaskData.StoreValue(collider.gameObject.layer, position);
+                            _gridMaskData.StoreValue((int) gridArea.gameArea, position);
                         }
                     }
                 }
@@ -57,20 +62,25 @@ namespace Gemserk.DataGrids
             if (Input.GetMouseButton(0))
             {
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                _gridMaskData.StoreValue(1 << 0, position);
+                _gridMaskData.StoreValue((int) TestGameArea.Area1, position);
             }
         
             if (Input.GetMouseButton(1))
             {
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                _gridMaskData.StoreValue(1 << 1, position);
+                _gridMaskData.StoreValue((int) TestGameArea.Area2, position);
             }
 
             if (Input.GetKey(KeyCode.Space))
             {
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                _gridMaskData.StoreValue(1 << 2, position);
+                _gridMaskData.StoreValue((int) TestGameArea.Area3, position);
             }
+
+            var gridValue = (TestGameArea) _gridMaskData.GetValue(_unit.position);
+
+            _text.text = $"Current: {gridValue}";
+
         }
 
         private void LateUpdate()
