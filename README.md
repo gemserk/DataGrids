@@ -4,6 +4,10 @@ Grid being updated in runtime:
 
 ![](images/runtimeupdate_grid.gif "Grid Data Runtime")
 
+Reading data from grid given specific coordinates (example in code):
+
+![](images/runtime_read_data.gif "Grid Data Read")
+
 World data example (colliders):
 
 ![](images/worlddata_2.png "World Data")
