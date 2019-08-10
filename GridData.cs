@@ -29,9 +29,14 @@ namespace Gemserk.DataGrids
             return i >= 0 && i < width && j >= 0 && j < height;
         }
 
-        public void StoreValue(int value, int i, int j)
+        public void StoreFlagValue(int value, int i, int j)
         {
             values[i + j * width] |= value;
+        }
+        
+        public void StoreValue(int value, int i, int j)
+        {
+            values[i + j * width] = value;
         }
 
         public int ReadValue(int i, int j)
