@@ -53,7 +53,7 @@ namespace Gemserk.DataGrids
                     {
                         if (gridArea.mainCollider.OverlapPoint(position))
                         {
-                            _gridMaskData.StoreValue((int) gridArea.gameArea, position);
+                            _gridMaskData.StoreFlagValue((int) gridArea.gameArea, position);
                         }
                     }
                 }
@@ -62,19 +62,19 @@ namespace Gemserk.DataGrids
             if (Input.GetMouseButton(0))
             {
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                _gridMaskData.StoreValue((int) TestGameArea.Area1, position);
+                _gridMaskData.StoreFlagValue((int) TestGameArea.Area1, position);
             }
         
             if (Input.GetMouseButton(1))
             {
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                _gridMaskData.StoreValue((int) TestGameArea.Area2, position);
+                _gridMaskData.StoreFlagValue((int) TestGameArea.Area2, position);
             }
 
             if (Input.GetKey(KeyCode.Space))
             {
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                _gridMaskData.StoreValue((int) TestGameArea.Area3, position);
+                _gridMaskData.StoreFlagValue((int) TestGameArea.Area3, position);
             }
 
             var gridValue = (TestGameArea) _gridMaskData.GetValue(_unit.position);
