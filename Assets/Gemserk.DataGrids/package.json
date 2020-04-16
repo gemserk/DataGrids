@@ -1,8 +1,13 @@
 {
 	"name": "com.gemserk.datagrids",
-	"displayName": "Gemserk Data Grids",
+	"displayName": "com.gemserk.datagrids",
 	"version": "0.0.1",
 	"unity": "2018.1",
 	"description": "Just a grid implementation with some useful methods",
+	"keywords": [
+		"grids",
+		"data",
+		"structures"
+	],
 	"dependencies": {}
 }
